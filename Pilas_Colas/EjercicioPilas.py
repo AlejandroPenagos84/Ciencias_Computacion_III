@@ -3,16 +3,13 @@ from Estructuras_Datos import Pila
 # A partir de la expresión posfija, obtiene el valor de la expresión
 def operar(expresion):
     op = obtener_notacion_polaca(expresion)
-    pila = Pila()  # Asegúrate de que esta clase esté definida correctamente
+    pila = Pila()
 
     if op is not None:
-        numero_actual = ""
+        print(op)
         for termino in op:
-            if termino.isdigit():
-                numero_actual = numero_actual + termino
-            elif termino == " ":
-                pila.push(int(numero_actual))
-                numero_actual = ""
+            if termino.isnumeric():
+                pila.push(float(termino))
             else:
                 num1 = pila.pop()
                 num2 = pila.pop()
@@ -37,25 +34,28 @@ def obtener_notacion_polaca(expresion):
         salida = []
         terminos = obtener_terminos_expresion(expresion)
 
+        precedencia = {'+': 1, '-': 1, '*': 2, '/': 2}
+
         for termino in terminos:
             if termino.isnumeric():
                 salida.append(termino)
-                salida.append(" ")
             elif termino in "+-*/":
+                while (not pila.esta_vacia() and
+                       pila.top() in precedencia and
+                       precedencia[termino] <= precedencia[pila.top()]):
+                    salida.append(pila.pop())
                 pila.push(termino)
             elif termino in "({[":
                 pila.push(termino)
             elif termino in ")}]":
-                elemento_final = pila.pop()
-                while elemento_final not in "({[":
-                    salida.append(elemento_final)
-                    elemento_final = pila.pop()
+                while not pila.esta_vacia() and pila.top() not in "({[":
+                    salida.append(pila.pop())
+                pila.pop()
 
         while not pila.esta_vacia():
-            elemento_final = pila.pop()
-            salida.append(elemento_final)
+            salida.append(pila.pop())
 
-        return "".join(salida)
+        return salida
     else:
         return None
 
@@ -87,12 +87,15 @@ def obtener_terminos_expresion(expresion):
     numero = ""
     salida = []
     for item in expresion:
-        if item.isdigit():
+        if item.isnumeric():
             numero= numero+item
         else:
             salida.append(numero)
             salida.append(item)
             numero = ""
+
+    if numero != "":
+        salida.append(numero)
     return list(filter(lambda x:x!="",salida))
 
 # Convierte el string en una lista
