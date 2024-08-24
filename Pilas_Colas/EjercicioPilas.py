@@ -1,28 +1,31 @@
 from Estructuras_Datos import Pila
 
-#A partir de la expresión posfija, obtiene el valor de la expresión
+# A partir de la expresión posfija, obtiene el valor de la expresión
 def operar(expresion):
     op = obtener_notacion_polaca(expresion)
-    pila = Pila()
+    pila = Pila()  # Asegúrate de que esta clase esté definida correctamente
 
     if op is not None:
+        numero_actual = ""
         for termino in op:
             if termino.isdigit():
-                pila.push(termino)
+                numero_actual = numero_actual + termino
+            elif termino == " ":
+                pila.push(int(numero_actual))
+                numero_actual = ""
             else:
-                num1 = int(pila.pop())
-                num2 = int(pila.pop())
+                num1 = pila.pop()
+                num2 = pila.pop()
                 res = 0
                 if termino == "+":
-                    res = num1+num2
+                    res = num2 + num1
                 elif termino == "-":
-                    res = num1-num2
+                    res = num2 - num1
                 elif termino == "*":
-                    res = num1*num2
-                elif termino == "-/":
-                    res = num1/num2
-
-                pila.push(str(res))
+                    res = num2 * num1
+                elif termino == "/":
+                    res = num2 / num1
+                pila.push(res)
         return pila.pop()
     else:
         return "La expresion no esta balanceada"
@@ -32,11 +35,12 @@ def obtener_notacion_polaca(expresion):
     if equilibrar_simbolos(expresion):
         pila = Pila()
         salida = []
-        terminos_palabras = convertir_a_lista(expresion)
+        terminos = obtener_terminos_expresion(expresion)
 
-        for termino in terminos_palabras:
-            if termino.isdigit():
+        for termino in terminos:
+            if termino.isnumeric():
                 salida.append(termino)
+                salida.append(" ")
             elif termino in "+-*/":
                 pila.push(termino)
             elif termino in "({[":
@@ -79,6 +83,17 @@ def equilibrar_simbolos(expresion):
 
     return balanceado
 
+def obtener_terminos_expresion(expresion):
+    numero = ""
+    salida = []
+    for item in expresion:
+        if item.isdigit():
+            numero= numero+item
+        else:
+            salida.append(numero)
+            salida.append(item)
+            numero = ""
+    return list(filter(lambda x:x!="",salida))
 
 # Convierte el string en una lista
 def convertir_a_lista(expresion):
@@ -99,4 +114,4 @@ def verificar_simbolo_cierre(apertura,cierre):
     return simbolos_apertura.index(apertura) == simbolos_cierre.index(cierre)
 
 
-print(operar("(9+5)*{8+4}*(5)"))
+print(operar(input()))
