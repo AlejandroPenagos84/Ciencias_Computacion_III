@@ -62,26 +62,16 @@ def obtener_notacion_polaca(expresion):
 
 # Muestra si una expresión tiene el número de parentesis correctos
 def equilibrar_simbolos(expresion):
-    balanceado = True
     pila = Pila()
-    terminos_palabras = convertir_a_lista(expresion)
+    terminos_palabras = expresion.replace("\\s", "")
 
     for termino in terminos_palabras:
         if termino in "({[":
             pila.push(termino)
         elif termino in ")}]":
-            if pila.esta_vacia():
-               balanceado = False
-            else:
-                balanceado = verificar_simbolo_cierre(pila.pop(),termino)
-
-            if not balanceado:
-                break
-
-    if not(pila.esta_vacia()):
-        balanceado = False
-
-    return balanceado
+            if pila.esta_vacia() or not verificar_simbolo_cierre(pila.pop(), termino):
+                return False
+    return pila.esta_vacia()
 
 def obtener_terminos_expresion(expresion):
     numero = ""
@@ -98,18 +88,6 @@ def obtener_terminos_expresion(expresion):
         salida.append(numero)
     return list(filter(lambda x:x!="",salida))
 
-# Convierte el string en una lista
-def convertir_a_lista(expresion):
-    terminos_palabras = []
-
-    # Obtengo los terminos de la expresión
-    for caracter in expresion:
-        if caracter != " ":
-            terminos_palabras.append(caracter)
-
-    return terminos_palabras
-
-
 # Verifica que el simbolo de apaertura corresponda con el de cierre
 def verificar_simbolo_cierre(apertura,cierre):
     simbolos_apertura = "({["
@@ -117,4 +95,7 @@ def verificar_simbolo_cierre(apertura,cierre):
     return simbolos_apertura.index(apertura) == simbolos_cierre.index(cierre)
 
 
-print(operar(input()))
+print(equilibrar_simbolos(input()))
+
+
+#print(operar(input()))
