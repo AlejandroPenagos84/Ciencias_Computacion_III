@@ -103,9 +103,6 @@ def planificacion(tareas):
         if numTareas >= maximoPlazo:
             break
     resultado = [v for v in resultado if v > 0]
-
-
-
     return resultado
 
 res = planificacion(tareasPrediseñadas())
