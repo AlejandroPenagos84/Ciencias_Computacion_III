@@ -41,3 +41,6 @@ class Cola():
     def tam(self):
         return len(self.items)
 
+    def sort(self,exp):
+        self.items.sort(key=exp)
+
