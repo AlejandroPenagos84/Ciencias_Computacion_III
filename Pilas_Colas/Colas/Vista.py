@@ -46,14 +46,15 @@ def darDeAltaTarea(tareasCompletadas):
 def eliminar():
     return
 
-def mostrar(colaTareas,colasAuxiliares):
 
+def mostrar(colaTareas, colasAuxiliares):
     if not colaTareas.esta_vacia():
         ct = colaTareas.top()
-    if not colasAuxiliares.esta_vacia():
         print("|____________________________________________________|")
         print(f"* Tarea: {ct.nombre} \n* Duracion Actual: {ct.duracion}")
         print("|____________________________________________________|")
+
+    if not colasAuxiliares.esta_vacia():
         for t in colasAuxiliares.items:
             print(f"* Tarea: {t.nombre} \n* Duracion Actual: {t.duracion}")
             print("|____________________________________________________|")

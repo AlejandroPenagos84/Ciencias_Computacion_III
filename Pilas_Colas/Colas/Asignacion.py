@@ -30,13 +30,16 @@ def seguimientoTareas():
     while True:
         if colaTareas.esta_vacia():
             continue
-        if colaTareas.top().duracion == 0:
+        if colaTareas.top().duracion == 0 :
             tareasCompletadas.queue(colaTareas.dequeue())  # Metemos la primera
+            if colaAuxiliar.esta_vacia():
+                continue
             tAux = colaAuxiliar.dequeue()  # Igualamos al que quitamos
             colaTareas.queue(tAux)  # y lo ponemos aqui una vez que haya terminado
             tAux.iniciar_contador()
         else:
             time.sleep(colaTareas.top().duracion)  # Leemos la duracion y esperamos, y una vez esperado lo eliminamos:
+
 
 
 hilo1 = threading.Thread(target=iniciarPrograma)
