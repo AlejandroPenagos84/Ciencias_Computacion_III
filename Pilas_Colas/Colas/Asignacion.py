@@ -1,5 +1,5 @@
 import sys
-from Estructuras_Datos import Cola
+from Pilas_Colas.Estructuras_Datos import Cola
 import threading
 import time
 from Vista import *
