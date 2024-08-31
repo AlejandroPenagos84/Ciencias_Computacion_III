@@ -21,5 +21,13 @@ def verificar_simbolo_cierre(apertura,cierre):
     simbolos_cierre = ")}]"
     return simbolos_apertura.index(apertura) == simbolos_cierre.index(cierre)
 
+while True:
+    p = input("Ingresa la expresión. Si quieres salir ingresa 0\n")
 
-print(equilibrar_simbolos(input()))
+    if p == "0":
+        break
+
+    resultado = "Estan equilibrados los simbolos " if equilibrar_simbolos(p) else "No estan equilibrados los simbolos"
+
+    print(resultado)
+
