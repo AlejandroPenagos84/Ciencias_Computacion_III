@@ -1,5 +1,5 @@
 import sys
-from Pilas_Colas.Estructuras_Datos import Cola
+from Estructuras_Datos import Cola
 import threading
 import time
 from Vista import *
@@ -19,7 +19,7 @@ def iniciarPrograma():
         elif electionMenu == 2:
             darDeAltaTarea(tareasCompletadas)
         elif electionMenu == 3:
-            eliminar()
+            eliminar(colaAuxiliar)
         elif electionMenu == 4:
             mostrar(colaTareas, colaAuxiliar)
         elif electionMenu == 5:

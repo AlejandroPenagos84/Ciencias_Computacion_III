@@ -43,8 +43,14 @@ def darDeAltaTarea(tareasCompletadas):
         if darAlta == 0:
             tareasCompletadas.dequeue()
 
-def eliminar():
-    return
+def eliminar(colasAuxiliares):
+    if not colasAuxiliares.esta_vacia():
+        elementoEliminado = colasAuxiliares.dequeue()
+        colasAuxiliares.sort(
+            lambda t: t.duracion)
+        print(f"Se elimino la tarea: {elementoEliminado.nombre}")
+
+
 
 
 def mostrar(colaTareas, colasAuxiliares):
